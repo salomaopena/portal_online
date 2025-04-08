@@ -7,8 +7,14 @@ const RatingsModel = {
     },
     
     getRatingById: async (id) => {
-        const query = 'SELECT * FROM ratings WHERE id = ?';
+        const query = 'SELECT * FROM ratings WHERE id = ? AND deleted_at IS NULL';
         const [rows] = await pool.query(query, [id]);
+        return rows[0];
+    },
+
+    getRatingByUserAndNews: async (user_id, news_id) => {
+        const query = 'SELECT * FROM ratings WHERE user_id = ? AND news_id = ? AND deleted_at IS NULL';
+        const [rows] = await pool.query(query, [user_id, news_id]);
         return rows[0];
     },
     

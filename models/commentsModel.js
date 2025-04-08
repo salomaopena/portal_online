@@ -11,6 +11,11 @@ const Comments = {
         return rows[0];
     },
 
+    getByUserAndNews: async (user_id, post_id) => {
+        const [rows] = await pool.query('SELECT * FROM comments WHERE deleted_at IS NULL AND user_id =? AND news_id = ?', [user_id, post_id]);
+        return rows[0];
+    },
+
     create: async (comment, user_id, post_id) => {
         const [result] = await pool.query('INSERT INTO comments (comment, user_id, news_id) VALUES (?, ?, ?)', [comment, user_id, post_id]);
         return result.insertId;
