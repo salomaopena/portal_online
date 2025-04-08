@@ -29,7 +29,7 @@ const newsController = {
                 return res.status(400).json({ status: 400, message: 'Categoria já cadastrada' });
             }
             const id = await News.create(title, slug, content, category_id, author_id);
-            res.status(200).json({ status: 200, message: 'Notícia criada com sucesso', title, slug, content, category_id, author_id });
+            res.status(200).json({ status: 200, message: 'Notícia criada com sucesso', id, title, slug, content, category_id, author_id });
         } catch (error) {
             res.status(500).json({ status: 500, message: 'Erro ao criar notícia ', error: error });
         }
