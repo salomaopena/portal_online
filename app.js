@@ -33,11 +33,8 @@ app.set('view engine', 'hbs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Configuração das rotas
-app.get('/', (req, res) => {
-    res.send('Olá pessoal estou programando em NODEJS');
-    //res.render('home', { title: 'Home' });
-});
+// API routes
+app.use('/api', require('./routes/api'));
 
 
 

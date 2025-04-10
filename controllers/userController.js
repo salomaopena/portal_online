@@ -145,6 +145,8 @@ const userController = {
             req.session.user = user;
             req.session.token = token; // Armazena o token na sessão
 
+            await User.updateToken(user.id, token); // Atualiza o token no banco de dados
+
             res.json({ message: 'Você acessou o sistema com sucesso', token });
 
         } catch (error) {

@@ -24,6 +24,12 @@ const User = {
         const [result] = await pool.query('UPDATE users SET first_name = ?, last_name = ?, email = ?, role = ? WHERE id = ? AND deleted_at IS NULL', [first_name, last_name, email, role, id]);
         return result.affectedRows;
     },
+
+    updateToken: async (id, token) => {
+        const [result] = await pool.query('UPDATE users SET reset_token = ? WHERE id = ? AND deleted_at IS NULL', [token, id]);
+        return result.affectedRows;
+    },
+
     updatePassword: async (id, newPassword) => {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         const [result] = await pool.query('UPDATE users SET passwd = ? WHERE id = ? AND deleted_at IS NULL', [hashedPassword, id]);
