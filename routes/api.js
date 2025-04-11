@@ -3,6 +3,8 @@ const express = require('express')
 const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
 const newsController = require('../controllers/newsController');
+const commentController = require('../controllers/commentController');
+const ratingController =  require('../controllers/ratingController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -35,5 +37,19 @@ router.post('/news/add',newsController.createNews);
 router.put('/news/update/:id',newsController.updateNews);
 router.put('/news/delete/:id',newsController.deleteNews);
 
+//comments routes
+router.get('/comments',commentController.findAll);
+router.get('/comment/:id', commentController.findById)
+router.post('/comment/add',commentController.createComment);
+router.put('/comment/update/:id',commentController.updateComment);
+router.put('/comment/delete/:id',commentController.deleteComment)
+
+//ratings routes
+
+router.get('/ratings',ratingController.findAll)
+router.get('/rating/:id',ratingController.findById)
+router.post('/rating/add',ratingController.createRating)
+router.put('/rating/update/:id',ratingController.findById)
+router.put('/rating/delete/:id',ratingController.deleteRating)
 
 module.exports = router;
