@@ -52,4 +52,7 @@ router.post('/rating/add',ratingController.createRating)
 router.put('/rating/update/:id',ratingController.findById)
 router.put('/rating/delete/:id',ratingController.deleteRating)
 
+
+
+
 module.exports = router;
