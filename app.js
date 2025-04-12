@@ -4,6 +4,8 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
+
 const dotenv = require('dotenv');
 
 dotenv.config(); // carregar as variáveis de ambiente do arquivo .env
