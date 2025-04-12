@@ -1,0 +1,241 @@
+/*style.css*/
+:root {
+  --bg-color-1: #28251E;
+  --bg-color-2:#2F2B24;
+  --top-bar-bg-color: rgb(248, 249, 250);
+  --color-primary: #007BFF;
+  --color-secondary: #06757D;
+  --color-success: #28A745;
+  --color-warning: #FFC107;
+  --color-danger: #DC3545;
+  --color-senary: #FFF6C3;
+  --color-septenary: #111111;
+  --color-octonary: #2F2B24;
+  --shadow: 0px 2px 4px rgba(0, 0, 0, .1);
+
+  --login-bg-page-01: #007bFf;
+  --login-bg-page-02: #023698;
+
+  --login-bg-box-01: #fffbf6;
+  --login-bg-box-02: #eeeeee;
+
+  --btn-login-border: #f69540;
+  --btn-login-hover: #8a4242;
+
+  --login-link: #290000;
+  --login-link-hover: #039abc;
+}
+
+* {
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: inherit;
+}
+
+/*topbar*/
+
+.no-link a{
+  color: #dbdbdb !important;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.no-link a:hover{
+  color:#f69540 !important;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+/**
+sidebar
+*/
+.sidebar {
+  height: 100vh;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #343a40;
+  padding-top: 60px;
+  color: #dbdbdb;
+  transition: all 0.3s ease;
+  overflow-x: hidden; /* Evita a barra de rolagem horizontal na sidebar */
+}
+
+.sidebar a {
+  padding: 15px;
+  text-decoration: none;
+  display: block;
+  color: #dbdbdb;
+}
+
+.sidebar a:hover {
+  background: #495057;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.navbar {
+  position:fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar .nav-links {
+  margin-right: 20px;
+}
+
+.navbar .nav-links a {
+  margin-left: 10px;
+}
+
+.card-news img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #dbdbdb;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #000000;
+  color: #dbdbdb;
+  text-align: center;
+  padding: 15px 0;
+  left: 0;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+      width: 0;
+      overflow: hidden;
+  }
+
+  .content {
+      margin-left: 0;
+  }
+}
+
+
+.link-none-decoration{
+  text-decoration: none;
+}
+
+.text-decoration-none{
+  text-decoration: none;
+  color:#290000;
+}
+
+
+
+/*carousel*/
+
+.carousel-container {
+  margin: 0 auto; /* Centraliza o slide na tela */
+  position: relative;
+  width: 100%;
+}
+
+.carousel-item {
+  position: relative;
+}
+
+.carousel-item img {
+  height: 60vh; /* Ajuste a altura */
+  object-fit: cover;
+  width: 100%;
+}
+
+
+/* Overlay para deixar o slide escuro */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Ajustar a opacidade para mais ou menos escuridão */
+}
+
+/* Centralizando o texto verticalmente */
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centraliza no meio do slide */
+  text-align: center;
+  color: white;
+  width: 80%; /* Define uma largura melhor para o texto */
+}
+
+.carousel-caption h5 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.carousel-caption p {
+  font-size: 1.2rem;
+}
+
+/*end carrousel*/
+
+.content-title{
+  font-weight:bold;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  color: #880000;
+}
+
+
+.text-justify {
+  text-align: justify;
+}
+
+.container{
+  width: 95% !important;
+}
+
+/*Login and register forms*/
+
+.auth-container {
+  width: 45vh;
+  min-width: 350px;
+  max-width: 500px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.no-scroll {
+  overflow: hidden; /* Impede a rolagem vertical */
+  height: 100vh;     /* Garante que a altura ocupe toda a tela */
+  display: flex;     /* Para centralizar o conteúdo com flexbox */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
+
+/* Ícone do Font Awesome */
+
+

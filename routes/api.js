@@ -1,5 +1,5 @@
 // Description: This file defines the API routes for the application, including user authentication, category management, and news management.
-const express = require('express')
+const express = require('express');
 const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
 const newsController = require('../controllers/newsController');
@@ -10,13 +10,14 @@ const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
 
-//Admin routes
-router.get('/auth/users', userController.findAllUsers);
+
+//user routes
+router.get('/auth/users', authMiddleware.isValidURL,userController.findAllUsers);
 router.post('/auth/register', userController.createUser);
 router.post('/auth/login',userController.login);
 router.get('/auth/user/:id', userController.findUserById);
 router.put('/auth/update/:id', userController.updateUser);
-router.put('/auth/change-password', authMiddleware.isAuthenticated, userController.changePassword);
+router.put('/auth/change-password', authMiddleware.isValidURL, userController.changePassword);
 router.put('/auth/reset-password', userController.resetPassword);
 router.post('/auth/reset-password-request', userController.resetPasswordRequest);
 router.put('/auth/delete/:id', userController.deleteUser);
