@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeJS</title>
+
+    <!-- Importando o Bootstrap CSS a partir da pasta assets-->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+
+    <!-- fontawosome-->
+    <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css">
+
+    <!-- font google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+    {{> topbar }}
+    {{> msg }}
+    <main>
+        <div class="my-4">
+
+            {{{body}}}
+
+        </div>
+    </main>
+    {{> footer }}
+
+</body>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        function toggleSidebar() {
+            let sidebar = document.getElementById('sidebar');
+            let content = document.getElementById('content');
+            if (sidebar.style.width === '250px' || sidebar.style.width === '') {
+                sidebar.style.width = '0';
+                content.style.marginLeft = '0';
+            } else {
+                sidebar.style.width = '250px';
+                content.style.marginLeft = '250px';
+            }
+        }
+
+        document.querySelector(".toggle-btn").addEventListener("click", toggleSidebar);
+    });
+</script>
+
+
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/fontawesome/js/all.min.js"></script>
+<script src="/assets/js/app.js"></script>
+<!--Sweetalert-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

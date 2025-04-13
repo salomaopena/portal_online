@@ -1,0 +1,20 @@
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-lg-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="no-link">
+                <button class="toggle-btn" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
+                <a class="navbar-brand" href="/"><i class="fa-solid fa-code"></i> NodeX <i class="fa-solid fa-code"></i></a>
+            </div>
+            {{#if @user}}
+            <div class="nav-links d-flex align-items-center no-link">
+                <a href="#" class="text-white-50 me-4"><i class="fa-regular fa-user me-2"></i>Perfil</a>
+                <a href="#" id="logoutBtn" class="text-white-50"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Sair</a>
+            </div>
+            {{else}}
+            <div class="nav-links d-flex align-items-center no-link">
+                <a href="/login" class="text-white-50 me-4"><i class="fa-solid fa-unlock-keyhole me-2"></i>Login</a>
+                <a href="/register" class="text-white-50"><i class="fa-solid fa-id-card me-2"></i> Registrar</a>
+            </div>
+            {{/if}}
+        </div>
+    </nav>

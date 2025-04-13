@@ -135,7 +135,7 @@ const userController = {
             if (!user || !(await bcrypt.compare(passwd, user.passwd))) {
                 return res.status(400).json({ status: 400, message: 'Credenciais inválidas' });
             }
-            const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: '1h' });
+            const token = jwt.sign({ user: user}, SECRET_KEY, { expiresIn: '1h' });
             
             // **Verificar se req.session existe antes de atribuir**
             if (!req.session) {
