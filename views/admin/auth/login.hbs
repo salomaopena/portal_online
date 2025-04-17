@@ -2,16 +2,16 @@
 
     <div class="auth-container">
         <h3 class="text-center mb-4">Login</h3>
-        <form id="loginForm">
+        <form id="loginForm" action="/admin/login" method="POST">
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control rounded-pill" id="email" placeholder="Digite seu e-mail"
+                <input type="email" name="email" class="form-control rounded-pill" id="email" placeholder="Digite seu e-mail"
                     required>
             </div>
 
             <div class="mb-1">
                 <label for="password" class="form-label">Senha</label>
-                <input type="password" class="form-control rounded-pill" id="password" placeholder="Digite sua senha"
+                <input type="password" name="passwd" class="form-control rounded-pill" id="password" placeholder="Digite sua senha"
                     required>
             </div>
             <div class="mb-3">
@@ -43,3 +43,38 @@
         }
     }
 </script>
+
+
+{{! mensagem de interação com o usuário }}
+{{! Se o usuário já estiver logado, redireciona para a página inicial }}
+{{#if success}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: '{{success}}',
+            timer: 2500,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "/admin";
+        });
+    });
+</script>
+{{/if}}
+
+{{! Se houver um erro, exibe uma mensagem de erro }}
+
+{{#if error}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: '{{error}}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    });
+</script>
+{{/if}}

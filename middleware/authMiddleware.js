@@ -1,4 +1,7 @@
 exports.isAuthenticated = (req, res, next) => {
+    // Verifica se o usuário está autenticado (logado)
+    // Se estiver, adiciona o usuário à requisição e chama o próximo middleware
+    // Se não estiver, redireciona para a página de login
     if (req.session.user) {
         req.user = req.session.user; 
         return next();

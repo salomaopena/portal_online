@@ -36,6 +36,7 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API routes
+app.use('/admin', require('./routes/admin'));
 app.use('/api', require('./routes/api'));
 app.use('/', require('./routes/default'));
 
