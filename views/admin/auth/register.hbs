@@ -1,26 +1,26 @@
 <div class="bg-light d-flex justify-content-center align-items-center vh-100 no-scroll">
     <div class="auth-container">
         <h3 class="text-center">Registrar</h3>
-        <form id="registerForm">
+        <form id="registerForm" action="/admin/register" method="POST">
             <div class="mb-3">
                 <label for="first_name" class="form-label">Nome</label>
-                <input type="text" class="form-control rounded-pill" id="first_name" placeholder="Digite seu nome"
-                    required>
+                <input type="text" name="first_name" class="form-control rounded-pill" id="first_name"
+                    placeholder="Digite seu nome" required>
             </div>
             <div class="mb-3">
                 <label for="last_name" class="form-label">Sobrenome</label>
-                <input type="text" class="form-control rounded-pill" id="last_name" placeholder="Digite seu sobrenome"
-                    required>
+                <input type="text" name="last_name" class="form-control rounded-pill" id="last_name"
+                    placeholder="Digite seu sobrenome" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control rounded-pill" id="email" placeholder="Digite seu e-mail"
-                    required>
+                <input type="email" name="email" class="form-control rounded-pill" id="email"
+                    placeholder="Digite seu e-mail" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Senha</label>
-                <input type="password" class="form-control rounded-pill" id="password" placeholder="Digite sua senha"
-                    required>
+                <input type="password" name="passwd" class="form-control rounded-pill" id="password"
+                    placeholder="Digite sua senha" required>
             </div>
             <button type="submit" class="btn btn-primary p-2 rounded-pill w-100">
                 <i class="fa-solid fa-user-plus me-2"></i>Criar Conta
@@ -32,3 +32,38 @@
         </form>
     </div>
 </div>
+
+
+{{! mensagem de interação com o usuário }}
+{{! Se o usuário já estiver logado, redireciona para a página inicial }}
+{{#if success}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: '{{success}}',
+            timer: 2500,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "/login";
+        });
+    });
+</script>
+{{/if}}
+
+{{! Se houver um erro, exibe uma mensagem de erro }}
+
+{{#if error}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: '{{error}}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    });
+</script>
+{{/if}}

@@ -137,17 +137,19 @@ const userController = {
             }
             const token = jwt.sign({ user: user}, SECRET_KEY, { expiresIn: '1h' });
             
-            // **Verificar se req.session existe antes de atribuir**
-            if (!req.session) {
-                return res.status(500).json({ status: 500, message: "Erro na sessão" });
-            }
+            // // **Verificar se req.session existe antes de atribuir**
+            // if (!req.session) {
+            //     return res.status(500).json({ status: 500, message: "Erro na sessão" });
+            // }
             
-            req.session.user = user;
-            req.session.token = token; // Armazena o token na sessão
+            // req.session.user = user;
+            // req.session.token = token; // Armazena o token na sessão
+            // req.session.save(); // Salva a sessão
+
 
             await User.updateToken(user.id, token); // Atualiza o token no banco de dados
 
-            res.json({ message: 'Você acessou o sistema com sucesso', token });
+            res.json({ message: 'Você acessou o sistema com sucesso', token, user });
 
         } catch (error) {
             res.status(500).json({ status: 500, message: 'Erro ao fazer login', error });
