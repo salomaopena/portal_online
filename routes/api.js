@@ -21,7 +21,6 @@ router.put('/auth/change-password', authMiddleware.isValidURL, userController.ch
 router.put('/auth/reset-password', userController.resetPassword);
 router.post('/auth/reset-password-request', userController.resetPasswordRequest);
 router.put('/auth/delete/:id', userController.deleteUser);
-router.get("/auth/logout", userController.logout);
 
 //categories routes
 router.get('/categories',categoryController.findAll);
