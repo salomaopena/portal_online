@@ -1,19 +1,50 @@
+<!--menu navbar-->
+{{> navbar }}
 
-<div class="my-5 p-5 mt-5">
-<h1>{{user.first_name}} {{user.last_name}}</h1>
-<h2>{{user.email}}</h2>
-<h2>{{user.created_at}}</h2>
-<h2>{{user.updated_at}}</h2>
-{{user.last_login}}
-{{user.last_ip}}
-{{user.last_browser}}
-{{user.last_os}}
-{{user.last_device}}
-{{user.last_location}}
-{{user.last_country}}
-{{user.last_city}}
-{{user.last_region}}
-{{user.last_latitude}}
-{{user.last_longitude}}
+<!--main content-->
 
+<div class="content" id="content">
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mt-4">Últimas Notícias</h2>
+        </div>
+
+        <div class="col-md-6">
+            <h4 class="mt-4 text-end">Bem-vindo, {{user.first_name}} {{user.last_name}}!</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-news">
+                <img src="assets/images/slide01.jpg" class="card-img-top" alt="Imagem Notícia">
+                <div class="card-body">
+                    <h5 class="card-title">Título da Notícia</h5>
+                    <p class="card-text">Descrição breve da notícia...</p>
+                    <a href="#" class="btn btn-primary">Leia mais</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-news">
+                <img src="assets/images/slide01.jpg" class="card-img-top" alt="Imagem Notícia">
+                <div class="card-body">
+                    <h5 class="card-title">Título da Notícia</h5>
+                    <p class="card-text">Descrição breve da notícia...</p>
+                    <a href="#" class="btn btn-primary">Leia mais</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-news">
+                <img src="assets/images/slide01.jpg" class="card-img-top" alt="Imagem Notícia">
+                <div class="card-body">
+                    <h5 class="card-title">Título da Notícia</h5>
+                    <p class="card-text">Descrição breve da notícia...</p>
+                    <a href="#" class="btn btn-primary">Leia mais</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

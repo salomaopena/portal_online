@@ -155,17 +155,6 @@ const userController = {
             res.status(500).json({ status: 500, message: 'Erro ao fazer login', error });
         }
     },
-
-    logout: async(req, res) => {
-        req.session.destroy((err) => {
-            if (err) {
-                return res.status(500).json({ message: "Erro ao encerrar sessão" });
-            }
-            req.session = null;
-            res.clearCookie("connect.sid"); // Remove o cookie da sessão
-            res.json({ message: "Sessão encerrada com sucesso!" });
-        });
-    }
 };
 
 

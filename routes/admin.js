@@ -19,7 +19,6 @@ const api = axios.create({
 
 //dashboard
 router.get('/', middleware.isAuthenticated,(req, res) => {
-
     if (!req.session.user) {
         return res.redirect("/login");
     }
@@ -36,7 +35,6 @@ router.post('/register', async (req, res) => {
     // Verifica se todos os campos estão preenchidos
 
     if (!first_name || !last_name || !email || !passwd) {
-        console.log({ first_name: first_name, last_name: last_name, message: 'Dentro do IF' })
         return res.render('admin/auth/register', {
             error: 'Preencha todos os campos.'
         });
@@ -73,7 +71,7 @@ router.post('/register', async (req, res) => {
         }
 
         // Registro OK — renderiza com alerta de sucesso
-        console.log(response.data)
+        //console.log(response.data)
         res.render('admin/auth/register', {
             success: response.data.message || 'Usuário registrado com sucesso!'
         });
@@ -127,13 +125,24 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get("/lo", (req, res) => {
-    if (req.session.user) {
-        res.json({ status: "Sessão ativa", user: req.session.user });
-    } else {
-        res.json({ status: "Nenhum usuário na sessão" });
-    }
+
+router.get("/logout", middleware.isAuthenticated,(req, res) => {
+    // Limpa a sessão
+    req.session.destroy((err) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).render('admin/dashboard', {
+                error: 'Erro ao fazer logout.'
+            });
+        }
+        // Redireciona para a página de login
+        res.redirect('/login');
+    });
 });
+
+//forgot password
+
+
 
 
 module.exports = router;
