@@ -18,7 +18,7 @@ const api = axios.create({
 // Middleware para verificar se o usuário está autenticado
 
 //dashboard
-router.get('/', middleware.isAuthenticated,(req, res) => {
+router.get('/', middleware.isAuthenticated, (req, res) => {
     const isAdmin = req.session.user.role === 'admin';
     const totalUsers = 25; // Simulado
     const totalNews = 78;
@@ -138,7 +138,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.get("/logout", middleware.isAuthenticated,(req, res) => {
+router.get("/logout", middleware.isAuthenticated, (req, res) => {
     // Limpa a sessão
     req.session.destroy((err) => {
         if (err) {
@@ -153,6 +153,50 @@ router.get("/logout", middleware.isAuthenticated,(req, res) => {
 });
 
 //forgot password
+
+
+//listar categorias
+router.get('/categories', middleware.isAuthenticated, async (req, res) => {
+    const { success, error } = req.query;
+    try {
+        const response = await api.get('/categories'); // Faz requisição GET na API
+        // Verifica se a requisição foi bem-sucedida
+        if (response.status !== 200) {
+            return res.render('admin/categories/list', { error: 'Erro ao buscar categorias.' });
+        }
+        // Renderiza a página com os dados retornados
+
+        res.render('admin/categories/list', {
+            categories: response.data.data, // Passa os dados para o Handlebars
+            title: "Categorias",
+            user: req.session.user,
+            success,
+            error
+        }); // Envia os  para o Handlebars
+    } catch (error) {
+        res.render('admin/categories/list', { error: "Erro ao buscar usuários" });
+    }
+});
+
+
+
+//Adicionar categoria
+router.post('/categories/add', async (req, res) => {
+    const { name, slug } = req.body;
+    // Verifica se todos os campos estão preenchidos
+    if (!name || !slug) {
+        return res.redirect('/admin/categories', {
+            error: 'Preencha todos os campos.'
+        });
+    }
+
+    try {
+        await api.post('/categories/add', { name, slug });
+        res.redirect('/admin/categories?success=true');
+    } catch (error) {
+        res.redirect('/admin/categories?error=true');
+    }
+});
 
 
 

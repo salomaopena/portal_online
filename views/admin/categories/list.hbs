@@ -1,0 +1,181 @@
+<!--menu navbar-->
+{{> navbar }}
+
+<!--main content -->
+<div class="content mt-5" id="content">
+    <div class="mb-3">
+        <span class="content-title">
+            {{>page_title}}
+        </span>
+    </div>
+    <hr>
+
+    <div class="mb-3">
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalCategory">
+            <i class="fa-solid fa-plus me-2"></i> Adicionar Categoria
+        </button>
+    </div>
+
+    <div class="col-xxl col-12">
+
+        <div class="container-fluid mt-4 py-4">
+
+
+            {{#if categories.length}}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Categoria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each categories}}
+                    <tr id="category-{{this.id}}">
+                        <td>
+                            <h5>{{this.id}}</h5>
+                        </td>
+                        <td>
+                            <a href="#" class="text-decoration-none">
+                                <h5>{{this.name}}</h5>
+                            </a>
+                        </td>
+                        <td class="text-end align-items-center">
+
+                            <button onclick="openEditCategoryModal('{{this.id}}', '{{this.name}}', '{{this.slug}}')"
+                                class="btn btn-outline-secondary btn-md px-3 m-1">
+                                <i class="fa-regular fa-pen-to-square me-2"></i>
+                            </button>
+
+                            <button onclick="deleteCategory({{this.id}})"
+                                class="btn btn-outline-danger btn-md px-3 m-1">
+                                <i class="fa-solid fa-cubes-stacked me-2"></i>
+                            </button>
+                            <a href="#" class="btn btn-outline-warning btn-md px-3 m-1">
+                                <i class="fa-solid fa-newspaper me-2"></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{else}}
+            <div class="mb-3 alert alert-danger" role="alert">
+                <h4 class="text-muted">{{message}} Clique <a href="/admin/categories/new"
+                        class="link-none-decoration">aqui</a>
+                    para adicionar</h4>
+            </div>
+            {{/if}}
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Modal de Adicionar categoria -->
+<div class="modal fade" id="modalCategory" tabindex="-1" aria-labelledby="modalCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="formCategoria" method="POST" action="/admin/categories/add">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCategoriaLabel">Nova Categoria</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nome da Categoria</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" id="slug" name="slug" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success rounded-pill px-3"> <i
+                            class="fa-solid fa-plus me-"></i> Adicionar</button>
+                    <button type="button" class="btn btn-secondary rounded-pill px-3"
+                        data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<!-- Modal de Editar Categoria -->
+<div id="editCategoryModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Categoria</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoryForm">
+                    <input type="hidden" id="edit_id"> <!-- ID oculto -->
+                    <div class="mb-3">
+                        <label for="edit_name"></label>
+                        <input type="text" id="edit_name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Slug</label>
+                        <input type="text" id="edit_slug" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categoryNameInput = document.getElementById("name");
+        const categorySlugInput = document.getElementById("slug");
+
+        categoryNameInput.addEventListener("input", function () {
+            let slug = categoryNameInput.value
+                .toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove acentos
+                .replace(/\s+/g, "-") // Substitui espaços por hífens
+                .replace(/[^a-z0-9-]/g, "") // Remove caracteres especiais
+                .replace(/-+/g, "-") // Substitui múltiplos hífens por um único
+                .trim();
+
+            categorySlugInput.value = slug;
+        });
+    });
+
+</script>
+
+
+{{#if success}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Categoria adicionada!',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    });
+</script>
+{{/if}}
+
+{{#if error}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro ao adicionar categoria!',
+            showConfirmButton: true
+        });
+    });
+</script>
+{{/if}}

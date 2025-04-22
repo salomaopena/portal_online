@@ -4,6 +4,7 @@
 <!--main content-->
 
 <div class="content" id="content">
+    
     <div class="container-fluid mt-4">
 
         <h2 class="mb-4">Painel de Controle</h2>
@@ -11,17 +12,17 @@
         <!-- Botões de Atalho -->
         <div class="row mb-4">
             <div class="col-md-3 col-sm-6 mb-2">
-                <a href="/admin/user/list" class="btn btn-primary w-100">
+                <a href="/admin/users" class="btn btn-primary w-100">
                     <i class="fa-solid fa-users me-2 fa-3x"></i> <h2>Usuários</h2>
                 </a>
             </div>
             <div class="col-md-3 col-sm-6 mb-2">
-                <a href="/admin/news/create" class="btn btn-success w-100">
+                <a href="/admin/categories" class="btn btn-success w-100">
                     <i class="fa-regular fa-file-lines me-2 fa-3x"></i> <h2>Categorias</h2>
                 </a>
             </div>
             <div class="col-md-3 col-sm-6 mb-2">
-                <a href="/admin/news/list" class="btn btn-warning text-white w-100">
+                <a href="/admin/news" class="btn btn-warning text-white w-100">
                     <i class="fa-solid fa-newspaper me-2 fa-3x"></i> <h2>Notícias</h2>
                 </a>
             </div>
@@ -119,7 +120,7 @@
     });
 
 
-    const chartvisits = document.getElementById('myChart');
+    const chartvisits = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(chartvisits, {
         type: 'bar',
         data: {

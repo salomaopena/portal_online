@@ -24,7 +24,7 @@ const categoryController = {
             const { name, slug } = req.body;
             const category = await Category.getByName(name);
             if (category) {
-                return res.status(409).json({ status: 409, message: 'Categoria já existe' });
+                return res.status(400).json({ status: 400, message: 'Categoria já existe' });
             }
             const id = await Category.create(name, slug);
             res.status(200).json({ status: 200, message: 'Categoria criada com sucesso', data: { id } });
