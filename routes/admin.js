@@ -19,15 +19,27 @@ const api = axios.create({
 
 //dashboard
 router.get('/', middleware.isAuthenticated,(req, res) => {
+    const isAdmin = req.session.user.role === 'admin';
+    const totalUsers = 25; // Simulado
+    const totalNews = 78;
+    const recentAccess = "Hoje, 10:30";
+    // Verifica se o usuário está autenticado
     if (!req.session.user) {
         return res.redirect("/login");
     }
 
     res.render('admin/dashboard', {
         user: req.session.user,
+        isAdmin,
+        totalUsers,
+        totalNews,
+        recentAccess
     });
 
 });
+
+
+
 
 //register
 router.post('/register', async (req, res) => {

@@ -7,7 +7,7 @@
         {{#if user}}
         <div class="nav-links d-flex align-items-center no-link">
             <a href="#" class="text-white-50 me-4"><i class="fa-regular fa-user me-2"></i>Perfil</a>
-            <a href="#" id="logoutBtn" class="text-white-50"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+            <a href="#" id="logoutBtn" class="text-white-50"><i class="fa-solid fa-power-off me-2"></i>
                 Sair</a>
         </div>
         {{else}}
@@ -22,23 +22,5 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        document.getElementById('logoutBtn').addEventListener('click', function (e) {
-            e.preventDefault(); // Evita redirecionamento imediato
-
-            Swal.fire({
-                title: 'Deseja encerrar a sessão?',
-                text: "Você será redirecionado para a página de login.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sim, encerrar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '/admin/logout';
-                }
-            });
-        });
-    });
+    
 </script>

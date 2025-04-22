@@ -4,47 +4,137 @@
 <!--main content-->
 
 <div class="content" id="content">
+    <div class="container-fluid mt-4">
 
-    <div class="row">
-        <div class="col-md-6">
-            <h2 class="mt-4">Últimas Notícias</h2>
+        <h2 class="mb-4">Painel de Controle</h2>
+
+        <!-- Botões de Atalho -->
+        <div class="row mb-4">
+            <div class="col-md-3 col-sm-6 mb-2">
+                <a href="/admin/user/list" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-users me-2 fa-3x"></i> <h2>Usuários</h2>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <a href="/admin/news/create" class="btn btn-success w-100">
+                    <i class="fa-regular fa-file-lines me-2 fa-3x"></i> <h2>Categorias</h2>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <a href="/admin/news/list" class="btn btn-warning text-white w-100">
+                    <i class="fa-solid fa-newspaper me-2 fa-3x"></i> <h2>Notícias</h2>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <a href="#" id="logoutBtn" class="btn btn-danger w-100 btn-logout">
+                    <i class="fa-solid fa-power-off me-2 fa-3x"></i> <h2>Terminar Sessão</h2>
+                </a>
+            </div>
         </div>
 
-        <div class="col-md-6">
-            <h4 class="mt-4 text-end">Bem-vindo, {{user.first_name}} {{user.last_name}}!</h4>
-        </div>
-    </div>
+        <!-- Cards Informativos -->
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card border-primary shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuários</h5>
+                        <p class="card-text display-6 fw-bold">{{totalUsers}}</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card card-news">
-                <img src="assets/images/slide01.jpg" class="card-img-top" alt="Imagem Notícia">
-                <div class="card-body">
-                    <h5 class="card-title">Título da Notícia</h5>
-                    <p class="card-text">Descrição breve da notícia...</p>
-                    <a href="#" class="btn btn-primary">Leia mais</a>
+            <div class="col-md-4 mb-3">
+                <div class="card border-success shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Notícias</h5>
+                        <p class="card-text display-6 fw-bold">{{totalNews}}</p>
+                    </div>
+                </div>
+            </div>
+
+            {{#if isAdmin}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-info shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Últimos Acessos</h5>
+                        <p class="card-text display-6 fw-bold">{{recentAccess}}</p>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+
+        <!-- Gráfico de Estatísticas -->
+
+        <div class="row mt-4">
+            <h2 class="mb-4">Estatísticas</h2>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Notícias publicadas</h5>
+                        <canvas id="dashboardChart" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Visitas por dia</h5>
+                        <canvas id="myChart" height="100"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card card-news">
-                <img src="assets/images/slide01.jpg" class="card-img-top" alt="Imagem Notícia">
-                <div class="card-body">
-                    <h5 class="card-title">Título da Notícia</h5>
-                    <p class="card-text">Descrição breve da notícia...</p>
-                    <a href="#" class="btn btn-primary">Leia mais</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card card-news">
-                <img src="assets/images/slide01.jpg" class="card-img-top" alt="Imagem Notícia">
-                <div class="card-body">
-                    <h5 class="card-title">Título da Notícia</h5>
-                    <p class="card-text">Descrição breve da notícia...</p>
-                    <a href="#" class="btn btn-primary">Leia mais</a>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const chartBar1 = document.getElementById('dashboardChart').getContext('2d');
+    new Chart(chartBar1, {
+        type: 'bar',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+            datasets: [{
+                label: 'Notícias publicadas',
+                data: [5, 8, 12, 15, 20, 25], // Exemplo de dados
+                backgroundColor: '#0d6efd'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+
+    const chartvisits = document.getElementById('myChart');
+    const myChart = new Chart(chartvisits, {
+        type: 'bar',
+        data: {
+            labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+            datasets: [{
+                label: 'Visitas por dia',
+                data: [150, 200, 180, 250, 300, 400, 350],
+                backgroundColor: '#0d6efd'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+</script>
