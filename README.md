@@ -3,7 +3,7 @@
 ## [Descrição do Projeto](#descrição-do-projeto)
 
 Portal de notícias desenvolvido em NODEJS e EXPRESS
-[![imagem](https://)]
+[![imagem](https://github.com/salomaopena/portal_online/blob/004/public/assets/images/dashboard.PNG)]
 
 ## [Status do Projeto](#status-do-projeto)
 
