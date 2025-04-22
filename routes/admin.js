@@ -157,7 +157,6 @@ router.get("/logout", middleware.isAuthenticated, (req, res) => {
 
 //listar categorias
 router.get('/categories', middleware.isAuthenticated, async (req, res) => {
-    const { success, error } = req.query;
     try {
         const response = await api.get('/categories'); // Faz requisição GET na API
         // Verifica se a requisição foi bem-sucedida
@@ -170,14 +169,19 @@ router.get('/categories', middleware.isAuthenticated, async (req, res) => {
             categories: response.data.data, // Passa os dados para o Handlebars
             title: "Categorias",
             user: req.session.user,
-            success,
-            error
         }); // Envia os  para o Handlebars
     } catch (error) {
-        res.render('admin/categories/list', { error: "Erro ao buscar usuários" });
+        res.render('admin/categories/list', { error: "Erro ao buscar categoria" });
     }
 });
 
+
+//buscar o formulário de adição de categorias
+router.get('/categories/new', middleware.isAuthenticated, (req, res) => {
+    res.render('admin/categories/add', {
+        user: req.session.user,
+    });
+});
 
 
 //Adicionar categoria
@@ -185,20 +189,113 @@ router.post('/categories/add', async (req, res) => {
     const { name, slug } = req.body;
     // Verifica se todos os campos estão preenchidos
     if (!name || !slug) {
-        return res.redirect('/admin/categories', {
+        return res.render('admin/categories/edit', {
             error: 'Preencha todos os campos.'
         });
     }
 
     try {
-        await api.post('/categories/add', { name, slug });
-        res.redirect('/admin/categories?success=true');
+        const response = await api.post('/categories/add', { name, slug });
+        res.render('admin/categories/add', {
+            success: response.data.message || 'Categoria adicionada com sucesso!'
+        });
     } catch (error) {
-        res.redirect('/admin/categories?error=true');
+        console.log(error)
+        res.render('admin/categories/add', {
+            error: error.response?.data?.message || 'Erro ao adicionar categoria.'
+        });
     }
 });
 
 
+router.post('/categories/edit/:id', middleware.isAuthenticated, async (req, res) => {
+    const { id } = req.params;
+    // Verifica se o ID da categoria foi fornecido
+    if (!id) {
+        return res.render('admin/categories/edit', {
+            error: 'ID da categoria não fornecido.'
+        });
+    }
+
+    try {
+        const response = await api.get(`/categories/${id}`);
+        const category = response.data.data;
+        res.render('admin/categories/edit',
+            { category: category, user: req.session.user });
+    } catch (error) {
+        console.error(error);
+        res.render('admin/categories/edit', {
+            error: error.message || 'Erro ao buscar categoria.',
+        });
+    }
+});
+
+
+//editar categoria
+router.post('/categories/update/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, slug } = req.body;
+        // Verifica se todos os campos estão preenchidos
+        const response = await api.put(`/categories/update/${id}`, { name, slug });
+
+        res.render('admin/categories/edit', {
+            category: response.data.data, // Passa os dados atualizados para o Handlebars
+            success: response.data.message || 'Categoria atualizada com sucesso!'
+        });
+    } catch (error) {
+        res.render('admin/categories/edit', {
+            error: error.response?.data?.message || 'Erro ao atualizar categoria.'
+        });
+    }
+});
+
+
+//deletar categoria
+router.get('/categories/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    // Verifica se o ID da categoria foi fornecido
+    if (!id) {
+        return res.render('admin/categories/list', {
+            error: 'ID da categoria não fornecido.'
+        });
+    }
+
+    try {
+        const response = await api.put(`/categories/delete/${id}`);
+        res.render('admin/categories/list', {
+            categories: response.data.data, // Passa os dados atualizados para o Handlebars
+            success: response.data.message || 'Categoria deletada com sucesso!',
+        });
+    } catch (error) {
+        console.error(error);
+        res.render('admin/categories/list', {
+            error: error.response?.data?.message || 'Erro ao deletar categoria.',
+        });
+    }
+});
+
+
+
+//listar notícias
+router.get('/news', middleware.isAuthenticated, async (req, res) => {
+    try {
+        const response = await api.get('/news'); // Faz requisição GET na API
+        // Verifica se a requisição foi bem-sucedida
+        if (response.status !== 200) {
+            return res.render('admin/news/list', { error: 'Erro ao buscar notícias.' });
+        }
+        // Renderiza a página com os dados retornados
+
+        res.render('admin/news/list', {
+            news: response.data.news, // Passa os dados para o Handlebars
+            title: "Notícias",
+            user: req.session.user,
+        }); // Envia os  para o Handlebars
+    } catch (error) {
+        res.render('admin/news/list', { error: "Erro ao buscar notícias" });
+    }
+});
 
 
 module.exports = router;
