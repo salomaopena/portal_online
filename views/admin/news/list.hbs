@@ -1,0 +1,90 @@
+{{> navbar }}
+
+<!--main content -->
+<div class="content mt-5" id="content">
+
+    <div class="mb-3">
+        <span class="content-title">
+            {{>page_title}}
+        </span>
+
+    </div>
+    <hr>
+
+    <div class="mb-3">
+        <a href="/admin/news/new" class="btn btn-primary mb-3">
+            <i class="fa-solid fa-plus me-2"></i> Adicionar notícia
+        </a>
+    </div>
+    <div class="col-xxl col-12">
+
+        <div class="container-fluid mt-4 py-4">
+
+            {{#if news.length}}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Título</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each news}}
+                    <tr id="news-{{this.id}}">
+                        <td>
+                            <h5>{{this.id}}</h5>
+                        </td>
+                        <td>
+                            <a href="#" class="text-decoration-none">
+                                <h5>{{this.title}}</h5>
+                            </a>
+                        </td>
+                        <td>
+                            {{this.created_at}}
+                        </td>
+
+                        <td class="text-end align-items-center">
+
+                            <form method="POST" action="/admin/news/edit/{{this.id}}" style="display: inline;">
+                                <button type="submit" class="btn btn-outline-secondary btn-md px-3 m-1"> <i
+                                        class="fa-regular fa-pen-to-square me-2"></i>
+                                </button>
+                            </form>
+
+                            <button onclick="deleteNews({{this.id}})" class="btn btn-outline-danger btn-md px-3 m-1">
+                                <i class="fa-solid fa-trash-can me-2"></i>
+                            </button>
+                            
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
+            {{else}}
+            Não há notícias cadastradas.
+            {{/if}}
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+    
+    function formatarDataBrasileira(dataISO) {
+        const data = new Date(dataISO);
+        const formatador = new Intl.DateTimeFormat('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'America/Sao_Paulo'
+        });
+        return formatador.format(data);
+    }
+</script>

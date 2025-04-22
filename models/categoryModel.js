@@ -7,7 +7,7 @@ const Category = {
     },
 
     getById: async (id) => {
-        const [rows] = await pool.query('SELECT * FROM categories WHERE deleted_at IS NULL AND id = ?', [id]);
+        const [rows] = await pool.query('SELECT * FROM categories WHERE 1 AND deleted_at IS NULL AND id = ?', [id]);
         return rows[0];
     },
 

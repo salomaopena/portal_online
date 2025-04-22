@@ -1,0 +1,80 @@
+{{> navbar }}
+
+<div id="content" class="content  no-scroll">
+
+    <div class="auth-container">
+        <h3 class="text-center mb-4">Atualizar categoria</h3>
+        <form action="/admin/categories/update/{{category.id}}" method="POST">
+            {{! O ID da categoria é passado como um campo oculto para o formulário }}
+            <input type="hidden" id="id" value="{{category.id}}" name="id">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome da Categoria</label>
+                <input type="text" class="form-control" id="name" value="{{category.name}}" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <input type="hidden" id="slug" value="{{category.slug}}" name="slug" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success rounded-pill px-3">
+                <i class="fa-solid fa-check me-2"></i>
+                Actualizar
+            </button>
+        </form>
+    </div>
+</div>
+
+{{! Se houver um sucesso, exibe uma mensagem de sucesso }}
+{{#if success}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: '{{success}}',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "/admin/categories";
+        });
+    });
+</script>
+{{/if}}
+
+{{! Se houver um erro, exibe uma mensagem de erro }}
+
+{{#if error}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: '{{error}}',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    });
+</script>
+{{/if}}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categoryNameInput = document.getElementById("name");
+        const categorySlugInput = document.getElementById("slug");
+
+        categoryNameInput.addEventListener("input", function () {
+            let slug = categoryNameInput.value
+                .toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove acentos
+                .replace(/\s+/g, "-") // Substitui espaços por hífens
+                .replace(/[^a-z0-9-]/g, "") // Remove caracteres especiais
+                .replace(/-+/g, "-") // Substitui múltiplos hífens por um único
+                .trim();
+
+            categorySlugInput.value = slug;
+        });
+
+    });
+
+
+</script>
