@@ -11,4 +11,70 @@
 
     </div>
     <hr>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container mt-4 mb-4">
+                    <form action="/admin/news/add" method="POST" enctype="multipart/form-data"
+                        class="card p-4 shadow-sm">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+                        <input type="hidden" name="author_id" value="{{user.id}}" required>
+                        <input type="hidden" id="slug" name="slug" required>
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Conteúdo</label>
+                            <textarea id="content" name="content" class="form-control" rows="8"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category_id" class="form-label">Categoria</label>
+                            <select class="form-select" id="category_id" name="category_id" required>
+                                <option value="" selected disabled>Selecione uma categoria</option>
+                                {{#each categories}}
+                                <option value="{{this.id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Imagem</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa-solid fa-check me-2"></i>  
+                          <h5>Salvar Notícia</h5>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+{{!-- TinyMCE Script --}}
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        tinymce.init({
+            selector: 'textarea#content',
+            menu: {
+                file: { title: 'File', items: 'newdocument restoredraft | preview | importword exportpdf exportword | print | deleteallconversations' },
+                edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
+                view: { title: 'View', items: 'code revisionhistory | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments' },
+                insert: { title: 'Insert', items: 'image link media addcomment pageembed codesample inserttable | math | charmap emoticons hr | pagebreak nonbreaking anchor tableofcontents | insertdatetime' },
+                format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | language | removeformat' },
+                tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | a11ycheck code wordcount' },
+                table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
+                help: { title: 'Help', items: 'help' }
+            }
+        });
+    });
+</script>
