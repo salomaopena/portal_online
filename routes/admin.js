@@ -298,4 +298,37 @@ router.get('/news', middleware.isAuthenticated, async (req, res) => {
 });
 
 
+//buscar o formulário de adição de notícias
+router.get('/news/new', middleware.isAuthenticated, (req, res) => {
+    res.render('admin/news/add', {
+        title: "Adicionar Notícias",
+        user: req.session.user,
+    });
+});
+
+//Adicionar notícias
+
+router.post('/news/add', async (req, res) => {
+    const { title, content, category } = req.body;
+    // Verifica se todos os campos estão preenchidos
+    if (!title || !content || !category) {
+        return res.render('admin/news/add', {
+            error: 'Preencha todos os campos.'
+        });
+    }
+
+    try {
+        const response = await api.post('/news/add', { title, content, category });
+        res.render('admin/news/add', {
+            success: response.data.message || 'Notícia adicionada com sucesso!'
+        });
+    } catch (error) {
+        console.log(error)
+        res.render('admin/news/add', {
+            error: error.response?.data?.message || 'Erro ao adicionar notícia.'
+        });
+    }
+});
+
+
 module.exports = router;
